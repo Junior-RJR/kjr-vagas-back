@@ -7,24 +7,40 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// Simulação de banco de dados (em memória)
+let vagas = [
+  {
+    _id: '66f48c177c2673b11d632a30',
+    titulo: 'Desenvolvedor Frontend',
+    empresa: 'Tech Solutions',
+    nivel: 'Pleno',
+    area: 'Desenvolvimento',
+    salario: 5000,
+    responsavel: 'Carlos Silva',
+    contatoEmail: 'carlos.silva@techsolutions.com',
+    contatoCelular: '11987654321',
+    atribuicoes: 'Desenvolver interfaces de usuário, colaborar com designers e equipes de backend.',
+    competenciasNecessarias: 'JavaScript, React, CSS, HTML.',
+  }
+];
+
 // Rotas
 app.get('/api/vagas', (req, res) => {
-  // Aqui você pode retornar as vagas do seu banco de dados
-  res.json([
-    {
-      _id: '66f48c177c2673b11d632a30',
-      titulo: 'Desenvolvedor Frontend',
-      empresa: 'Tech Solutions',
-      nivel: 'Pleno',
-      area: 'Desenvolvimento',
-      salario: 5000,
-      responsavel: 'Carlos Silva',
-      contatoEmail: 'carlos.silva@techsolutions.com',
-      contatoCelular: '11987654321',
-      atribuicoes: 'Desenvolver interfaces de usuário, colaborar com designers e equipes de backend.',
-      competenciasNecessarias: 'JavaScript, React, CSS, HTML.',
-    }
-  ]);
+  res.json(vagas);
+});
+
+// Rota para cadastrar uma nova vaga
+app.post('/api/vagas', (req, res) => {
+  const novaVaga = { id: vagas.length + 1, ...req.body };
+  vagas.push(novaVaga);
+  res.status(201).json(novaVaga); // Retorna a vaga criada
+});
+
+// Rota para deletar uma vaga
+app.delete('/api/vagas/:id', (req, res) => {
+  const { id } = req.params;
+  vagas = vagas.filter(vaga => vaga.id !== parseInt(id));
+  res.status(204).send(); // Retorna um status 204 (sem conteúdo) se deletado com sucesso
 });
 
 // Iniciar o servidor
