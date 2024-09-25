@@ -3,34 +3,34 @@ const mongoose = require('mongoose');
 const vagaSchema = new mongoose.Schema({
   titulo: {
     type: String,
-    required: true, // campo obrigatório
+    required: true,
   },
   empresa: {
     type: String,
-    required: true, // campo obrigatório
+    required: true,
   },
   nivel: {
     type: String,
-    enum: ['Junior', 'Pleno', 'Senior'], // exemplo de níveis disponíveis
-    required: true, // campo obrigatório
+    enum: ['Junior', 'Pleno', 'Senior'],
+    required: true,
   },
   area: {
     type: String,
-    enum: ['Desenvolvimento', 'Design', 'Marketing', 'Recursos Humanos'], // exemplo de áreas disponíveis
-    required: true, // campo obrigatório
+    enum: ['Desenvolvimento', 'Design', 'Marketing', 'Recursos Humanos'],
+    required: true,
   },
   salario: {
-    type: Number, // ou String, dependendo de como você quer armazenar
-    required: true, // campo obrigatório
+    type: Number, // Certifique-se de que você está enviando um número do front-end
+    required: true,
   },
   responsavel: {
     type: String,
-    required: true, // campo obrigatório
+    required: true,
   },
   contatoEmail: {
     type: String,
     required: true,
-    match: /.+\@.+\..+/, // validação de email
+    match: /.+\@.+\..+/,
   },
   contatoCelular: {
     type: String,
@@ -38,11 +38,11 @@ const vagaSchema = new mongoose.Schema({
   },
   atribuicoes: {
     type: String,
-    required: true, // campo obrigatório
+    required: true,
   },
-  competenciasNecessarias: {
+  competenciasNecessarias: { // Mudança aqui
     type: String,
-    required: true, // campo obrigatório
+    required: true,
   },
 });
 
