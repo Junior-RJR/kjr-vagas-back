@@ -20,7 +20,7 @@ const vagaSchema = new mongoose.Schema({
     required: true,
   },
   salario: {
-    type: Number, // Certifique-se de que você está enviando um número do front-end
+    type: Number, 
     required: true,
   },
   responsavel: {
@@ -40,7 +40,7 @@ const vagaSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  competenciasNecessarias: { // Mudança aqui
+  competenciasNecessarias: { 
     type: String,
     required: true,
   },

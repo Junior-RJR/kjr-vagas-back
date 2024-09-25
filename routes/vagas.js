@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Vaga = require('../models/Vaga'); // Verifique se o caminho está correto
+const Vaga = require('../models/Vaga'); 
 
-// Rota para obter todas as vagas
 router.get('/', async (req, res) => {
   try {
     const vagas = await Vaga.find();
@@ -12,14 +11,13 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Rota para criar uma nova vaga
 router.post('/', async (req, res) => {
   const novaVaga = new Vaga(req.body);
   try {
     const vagaSalva = await novaVaga.save();
     res.status(201).json(vagaSalva);
   } catch (error) {
-    console.error(error); // Adicione isso para ver o erro no console
+    console.error(error); 
     res.status(400).send('Erro ao criar vaga');
   }
 });
@@ -37,5 +35,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// Exporte o router
 module.exports = router;

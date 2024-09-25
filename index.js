@@ -3,7 +3,6 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
@@ -24,26 +23,22 @@ let vagas = [
   }
 ];
 
-// Rotas
 app.get('/api/vagas', (req, res) => {
   res.json(vagas);
 });
 
-// Rota para cadastrar uma nova vaga
 app.post('/api/vagas', (req, res) => {
   const novaVaga = { id: vagas.length + 1, ...req.body };
   vagas.push(novaVaga);
-  res.status(201).json(novaVaga); // Retorna a vaga criada
+  res.status(201).json(novaVaga); 
 });
 
-// Rota para deletar uma vaga
 app.delete('/api/vagas/:id', (req, res) => {
   const { id } = req.params;
   vagas = vagas.filter(vaga => vaga.id !== parseInt(id));
-  res.status(204).send(); // Retorna um status 204 (sem conteúdo) se deletado com sucesso
+  res.status(204).send(); 
 });
 
-// Iniciar o servidor
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
