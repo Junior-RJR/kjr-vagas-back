@@ -25,37 +25,58 @@ app.use(express.json());
 //   }
 // ];
 
-app.get('/api/vagas', async (req, res) => {
-  try {
-    const vagas = await Vaga.find();
-    res.json(vagas);
-  } catch (error) {
-    res.status(500).send('Erro ao buscar vagas');
-  }
+app.get('/api/vagas', (req, res) => {
+  res.json(vagas);
 });
 
-app.post('/api/vagas', async (req, res) => {
-  const novaVaga = new Vaga(req.body);
-  try {
-    const vagaSalva = await novaVaga.save(); 
-    res.status(201).json(vagaSalva);
-  } catch (error) {
-    res.status(400).send('Erro ao criar vaga');
-  }
+app.post('/api/vagas', (req, res) => {
+  const novaVaga = { id: vagas.length + 1, ...req.body };
+  vagas.push(novaVaga);
+  res.status(201).json(novaVaga); 
 });
 
-app.delete('/api/vagas/:id', async (req, res) => {
-  try {
-    const vagaExcluida = await Vaga.findByIdAndDelete(req.params.id);
-    if (!vagaExcluida) {
-      return res.status(404).send('Vaga não encontrada');
-    }
-    res.status(204).send('Vaga excluída com sucesso');
-  } catch (error) {
-    res.status(500).send('Erro ao excluir vaga');
-  }
+app.delete('/api/vagas/:id', (req, res) => {
+  const { id } = req.params;
+  vagas = vagas.filter(vaga => vaga.id !== parseInt(id));
+  res.status(204).send(); 
 });
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
+
+
+// app.get('/api/vagas', async (req, res) => {
+//   try {
+//     const vagas = await Vaga.find();
+//     res.json(vagas);
+//   } catch (error) {
+//     res.status(500).send('Erro ao buscar vagas');
+//   }
+// });
+
+// app.post('/api/vagas', async (req, res) => {
+//   const novaVaga = new Vaga(req.body);
+//   try {
+//     const vagaSalva = await novaVaga.save(); 
+//     res.status(201).json(vagaSalva);
+//   } catch (error) {
+//     res.status(400).send('Erro ao criar vaga');
+//   }
+// });
+
+// app.delete('/api/vagas/:id', async (req, res) => {
+//   try {
+//     const vagaExcluida = await Vaga.findByIdAndDelete(req.params.id);
+//     if (!vagaExcluida) {
+//       return res.status(404).send('Vaga não encontrada');
+//     }
+//     res.status(204).send('Vaga excluída com sucesso');
+//   } catch (error) {
+//     res.status(500).send('Erro ao excluir vaga');
+//   }
+// });
+
+// app.listen(PORT, () => {
+//   console.log(`Servidor rodando na porta ${PORT}`);
+// });
