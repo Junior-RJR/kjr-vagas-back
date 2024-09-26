@@ -11,17 +11,32 @@ const vagaSchema = new mongoose.Schema({
   },
   nivel: {
     type: String,
-    enum: ['Junior', 'Pleno', 'Senior'],
+    enum: ['Junior', 'Pleno', 'Senior', 'Trainee', 'Estagio', 'Freelancer', 'Tecnico', 'Auxiliar', 'Surpevisor', 'Gerente', 'Coordenador', 'Outro'],
     required: true,
   },
   area: {
     type: String,
-    enum: ['Desenvolvimento', 'Design', 'Marketing', 'Recursos Humanos'],
+    enum: ['Tecnologia', 'Designer', 'Marketing', 'Recursos Humanos', 'Ajudante', 'Vendedor', 'Administrativo', 'Outro'],
     required: true,
   },
+  // salario: {
+  //   type: Number, 
+  //   required: true,
+  // },
   salario: {
-    type: Number, 
+    type: String, 
     required: true,
+    enum: [
+      'até R$ 1.000,00',
+      'R$ 1.001,00 até R$ 2.000,00',
+      'R$ 2.001,00 até R$ 3.000,00',
+      'R$ 3.001,00 até R$ 4.000,00',
+      'R$ 4.001,00 até R$ 5.000,00',
+      'R$ 5.001,00 até R$ 6.000,00',
+      'R$ 6.001,00 até R$ 7.000,00',
+      'acima de R$ 7.001,00',
+      'A combinar'
+    ],
   },
   responsavel: {
     type: String,
@@ -40,7 +55,7 @@ const vagaSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  competenciasNecessarias: { 
+  competencias: { 
     type: String,
     required: true,
   },
