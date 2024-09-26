@@ -5,8 +5,98 @@ const Vaga = require('./models/Vaga');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
+  console.log('Conectado ao MongoDB');
+}).catch(err => {
+  console.error('Erro ao conectar ao MongoDB:', err);
+});
+
 app.use(cors());
 app.use(express.json());
+
+// Rota GET para buscar vagas
+app.get('/api/vagas', async (req, res) => {
+  try {
+    const vagas = await Vaga.find(); // Busca as vagas no MongoDB
+    res.json(vagas);
+  } catch (err) {
+    console.error('Erro ao buscar vagas:', err);
+    res.status(500).send('Erro ao buscar vagas');
+  }
+});
+
+// Rota POST para adicionar uma nova vaga
+app.post('/api/vagas', async (req, res) => {
+  try {
+    const novaVaga = new Vaga(req.body);
+    await novaVaga.save(); // Salva a nova vaga no MongoDB
+    res.status(201).json(novaVaga);
+  } catch (err) {
+    console.error('Erro ao criar nova vaga:', err);
+    res.status(500).send('Erro ao criar nova vaga');
+  }
+});
+
+// Rota DELETE para remover uma vaga
+app.delete('/api/vagas/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Vaga.findByIdAndDelete(id); // Deleta a vaga do MongoDB
+    res.status(204).send();
+  } catch (err) {
+    console.error('Erro ao deletar vaga:', err);
+    res.status(500).send('Erro ao deletar vaga');
+  }
+});
+
+// Inicializa o servidor
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// app.use(cors());
+// app.use(express.json());
+
+
+
+
+
+
+
+
+
 
 // Simulação de banco de dados (em memória)
 // let vagas = [
@@ -25,26 +115,32 @@ app.use(express.json());
 //   }
 // ];
 
-app.get('/api/vagas', (req, res) => {
-  res.json(vagas);
-});
 
-app.post('/api/vagas', (req, res) => {
-  const novaVaga = { id: vagas.length + 1, ...req.body };
-  vagas.push(novaVaga);
-  res.status(201).json(novaVaga); 
-});
+////////////////////////////////////////////////////////////
 
-app.delete('/api/vagas/:id', (req, res) => {
-  const { id } = req.params;
-  vagas = vagas.filter(vaga => vaga.id !== parseInt(id));
-  res.status(204).send(); 
-});
+// app.get('/api/vagas', (req, res) => {
+//   res.json(vagas);
+// });
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+// app.post('/api/vagas', (req, res) => {
+//   const novaVaga = { id: vagas.length + 1, ...req.body };
+//   vagas.push(novaVaga);
+//   res.status(201).json(novaVaga); 
+// });
 
+// app.delete('/api/vagas/:id', (req, res) => {
+//   const { id } = req.params;
+//   vagas = vagas.filter(vaga => vaga.id !== parseInt(id));
+//   res.status(204).send(); 
+// });
+
+// app.listen(PORT, () => {
+//   console.log(`Servidor rodando na porta ${PORT}`);
+// });
+
+
+
+////////////////////////////////////////////////////////////
 
 // app.get('/api/vagas', async (req, res) => {
 //   try {
