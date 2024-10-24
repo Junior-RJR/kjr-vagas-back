@@ -17,10 +17,9 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use(cors());
 app.use(express.json());
 
-// Rota GET para buscar vagas
 app.get('/api/vagas', async (req, res) => {
   try {
-    const vagas = await Vaga.find(); // Busca as vagas no MongoDB
+    const vagas = await Vaga.find(); 
     res.json(vagas);
   } catch (err) {
     console.error('Erro ao buscar vagas:', err);
@@ -28,11 +27,10 @@ app.get('/api/vagas', async (req, res) => {
   }
 });
 
-// Rota POST para adicionar uma nova vaga
 app.post('/api/vagas', async (req, res) => {
   try {
     const novaVaga = new Vaga(req.body);
-    await novaVaga.save(); // Salva a nova vaga no MongoDB
+    await novaVaga.save(); 
     res.status(201).json(novaVaga);
   } catch (err) {
     console.error('Erro ao criar nova vaga:', err);
@@ -40,11 +38,10 @@ app.post('/api/vagas', async (req, res) => {
   }
 });
 
-// Rota DELETE para remover uma vaga
 app.delete('/api/vagas/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    await Vaga.findByIdAndDelete(id); // Deleta a vaga do MongoDB
+    await Vaga.findByIdAndDelete(id); 
     res.status(204).send();
   } catch (err) {
     console.error('Erro ao deletar vaga:', err);
@@ -52,7 +49,6 @@ app.delete('/api/vagas/:id', async (req, res) => {
   }
 });
 
-// Inicializa o servidor
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });

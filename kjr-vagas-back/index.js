@@ -3,13 +3,10 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Rotas
 app.get('/api/vagas', (req, res) => {
-  // Aqui você pode retornar as vagas do seu banco de dados
   res.json([
     {
       _id: '66f48c177c2673b11d632a30',
@@ -27,7 +24,6 @@ app.get('/api/vagas', (req, res) => {
   ]);
 });
 
-// Iniciar o servidor
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
